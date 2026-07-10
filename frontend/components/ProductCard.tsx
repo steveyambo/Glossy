@@ -20,7 +20,15 @@ export function ProductCard({ product, onToggleFavorite, favoriteBusy }: Props) 
 
       <Link href={`/products/${product.id}`} className="block">
         <div className="relative flex aspect-square items-center justify-center bg-surface2 p-8">
-          <GlossDrop color={product.colorHex} className="h-32 w-32 drop-shadow-lg" />
+          {product.imageUrl ? (
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <GlossDrop color={product.colorHex} className="h-32 w-32 drop-shadow-lg" />
+          )}
           {!product.inStock && (
             <span className="absolute left-3 top-3 rounded-pill border border-line bg-bg/80 px-3 py-1 text-xs text-muted">
               Rupture

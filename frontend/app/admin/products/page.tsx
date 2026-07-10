@@ -13,6 +13,7 @@ const EMPTY_FORM = {
   description: '',
   price: '',
   colorHex: '#E8A9BD',
+  imageUrl: '',
   finish: 'Glossy',
   inStock: true,
 };
@@ -41,6 +42,7 @@ function AdminProductsContent() {
       description: p.description,
       price: String(p.price),
       colorHex: p.colorHex,
+      imageUrl: p.imageUrl,
       finish: p.finish,
       inStock: p.inStock,
     });
@@ -63,6 +65,7 @@ function AdminProductsContent() {
       description: form.description,
       price: parseFloat(form.price || '0'),
       colorHex: form.colorHex,
+      imageUrl: form.imageUrl,
       finish: form.finish,
       inStock: form.inStock,
     };
@@ -129,6 +132,12 @@ function AdminProductsContent() {
           <input type="color" value={form.colorHex} onChange={(e) => setForm({ ...form, colorHex: e.target.value })}
             className="h-11 w-full rounded-lg border border-line bg-bg px-2" />
         </label>
+        <label className="flex flex-col gap-1.5 text-sm text-muted">
+          URL de l'image
+          <input value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+            placeholder="/products/mon-produit.png"
+            className="rounded-lg border border-line bg-bg px-4 py-2.5 text-ink" />
+        </label>
         <label className="flex items-center gap-2 self-end text-sm text-muted">
           <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} />
           En stock
@@ -158,7 +167,11 @@ function AdminProductsContent() {
           <div className="divide-y divide-line rounded-2xl border border-line bg-surface">
             {products.map((p) => (
               <div key={p.id} className="flex items-center gap-4 p-4">
-                <GlossDrop color={p.colorHex} className="h-12 w-12 shrink-0" />
+                {p.imageUrl ? (
+                  <img src={p.imageUrl} alt="" className="h-12 w-12 shrink-0 rounded-lg object-cover" />
+                ) : (
+                  <GlossDrop color={p.colorHex} className="h-12 w-12 shrink-0" />
+                )}
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-display text-ink">{p.name}</p>
                   <p className="text-sm text-muted">{p.shade} · {p.price.toFixed(2)} € · {p.inStock ? 'En stock' : 'Rupture'}</p>

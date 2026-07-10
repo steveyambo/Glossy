@@ -32,6 +32,21 @@ public static class SeedData
             );
         }
 
+        if (!db.Products.Any(p => p.Name == "Lip Gloss Star"))
+        {
+            db.Products.Add(new Product
+            {
+                Name = "Lip Gloss Star",
+                Shade = "Nacre holographique",
+                Description = "Un gloss transparent aux reflets iridescents pour illuminer les levres d'un eclat subtil.",
+                Price = 19.50m,
+                ColorHex = "#F2D7D9",
+                ImageUrl = "/products/lip-gloss-star.png",
+                Finish = "Irise",
+                InStock = true
+            });
+        }
+
         db.SaveChanges();
     }
 }

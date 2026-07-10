@@ -65,6 +65,7 @@ public class ProductsController : ControllerBase
             Description = dto.Description?.Trim() ?? string.Empty,
             Price = dto.Price,
             ColorHex = dto.ColorHex,
+            ImageUrl = dto.ImageUrl?.Trim() ?? string.Empty,
             Finish = string.IsNullOrWhiteSpace(dto.Finish) ? "Glossy" : dto.Finish,
             InStock = dto.InStock
         };
@@ -88,6 +89,7 @@ public class ProductsController : ControllerBase
         product.Description = dto.Description?.Trim() ?? string.Empty;
         product.Price = dto.Price;
         product.ColorHex = dto.ColorHex;
+        product.ImageUrl = dto.ImageUrl?.Trim() ?? string.Empty;
         product.Finish = string.IsNullOrWhiteSpace(dto.Finish) ? "Glossy" : dto.Finish;
         product.InStock = dto.InStock;
 
@@ -109,6 +111,6 @@ public class ProductsController : ControllerBase
     }
 
     private static ProductDto ToDto(Product p, bool isFavorite) => new(
-        p.Id, p.Name, p.Shade, p.Description, p.Price, p.ColorHex, p.Finish, p.InStock, isFavorite
+        p.Id, p.Name, p.Shade, p.Description, p.Price, p.ColorHex, p.ImageUrl, p.Finish, p.InStock, isFavorite
     );
 }

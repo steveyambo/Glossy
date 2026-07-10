@@ -76,6 +76,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<GlossDbContext>();
     var passwordService = scope.ServiceProvider.GetRequiredService<IPasswordService>();
     db.Database.EnsureCreated();
+    EnsureProductImageUrlColumn(db);
     SeedData.Seed(db, passwordService);
 }
 
@@ -92,3 +93,33 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static void EnsureProductImageUrlColumn(GlossDbContext db)
+{
+    var connection = db.Database.GetDbConnection();
+    var closeConnection = connection.State != System.Data.ConnectionState.Open;
+    if (closeConnection) connection.Open();
+
+    using var checkColumn = connection.CreateCommand();
+    checkColumn.CommandText = "PRAGMA table_info('Products');";
+    using var reader = checkColumn.ExecuteReader();
+    var hasImageUrl = false;
+    while (reader.Read())
+    {
+        if (string.Equals(reader.GetString(1), "ImageUrl", StringComparison.OrdinalIgnoreCase))
+        {
+            hasImageUrl = true;
+            break;
+        }
+    }
+
+    reader.Close();
+    if (!hasImageUrl)
+    {
+        using var addColumn = connection.CreateCommand();
+        addColumn.CommandText = "ALTER TABLE Products ADD COLUMN ImageUrl TEXT NOT NULL DEFAULT '';";
+        addColumn.ExecuteNonQuery();
+    }
+
+    if (closeConnection) connection.Close();
+}

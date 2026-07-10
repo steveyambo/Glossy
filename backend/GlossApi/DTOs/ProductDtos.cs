@@ -9,6 +9,7 @@ public record ProductDto(
     string Description,
     decimal Price,
     string ColorHex,
+    string ImageUrl,
     string Finish,
     bool InStock,
     bool IsFavorite
@@ -20,6 +21,7 @@ public record ProductWriteDto(
     string Description,
     [Range(0, 10000)] decimal Price,
     [Required] string ColorHex,
+    string? ImageUrl,
     string Finish,
     bool InStock
 );

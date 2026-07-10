@@ -15,6 +15,7 @@ export interface Product {
   description: string;
   price: number;
   colorHex: string;
+  imageUrl: string;
   finish: string;
   inStock: boolean;
   isFavorite: boolean;

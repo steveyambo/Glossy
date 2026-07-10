@@ -58,7 +58,11 @@ export default function ProductDetailPage() {
   return (
     <div className="container-lueur grid gap-12 py-14 md:grid-cols-2">
       <div className="flex aspect-square items-center justify-center rounded-2xl border border-line bg-surface2">
-        <GlossDrop color={product.colorHex} className="h-56 w-56 drop-shadow-xl" />
+        {product.imageUrl ? (
+          <img src={product.imageUrl} alt={product.name} className="h-full w-full rounded-2xl object-contain p-4" />
+        ) : (
+          <GlossDrop color={product.colorHex} className="h-56 w-56 drop-shadow-xl" />
+        )}
       </div>
 
       <div className="flex flex-col justify-center">

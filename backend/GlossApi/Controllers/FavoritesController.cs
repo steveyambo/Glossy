@@ -32,7 +32,7 @@ public class FavoritesController : ControllerBase
             .ToListAsync();
 
         return Ok(products.Select(p => new ProductDto(
-            p.Id, p.Name, p.Shade, p.Description, p.Price, p.ColorHex, p.Finish, p.InStock, true
+            p.Id, p.Name, p.Shade, p.Description, p.Price, p.ColorHex, p.ImageUrl, p.Finish, p.InStock, true
         )));
     }
 
