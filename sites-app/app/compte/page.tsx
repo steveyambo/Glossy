@@ -1,0 +1,9 @@
+import { getChatGPTUser } from "../chatgpt-auth";
+import { PageShell } from "../components/site-chrome";
+
+export const dynamic = "force-dynamic";
+export default async function AccountPage() {
+  const user = await getChatGPTUser();
+  if (!user) return <PageShell><main><section className="page-hero"><div><div className="eyebrow">Espace cliente</div><h1>Votre compte</h1><p>Connectez-vous pour synchroniser vos favoris et retrouver vos demandes sur tous vos appareils.</p><a className="button button-dark" href="/signin-with-chatgpt?return_to=%2Fcompte">Se connecter</a></div></section></main></PageShell>;
+  return <PageShell><main className="account-page"><aside className="account-nav"><div className="account-avatar">{user.displayName.slice(0,2).toUpperCase()}</div><h2>{user.displayName}</h2><p>{user.email}</p><nav><a className="active" href="/compte">Vue d’ensemble</a><a href="/favoris">Mes favoris</a><a href="#demandes">Mes demandes</a><a href="#recents">Vus récemment</a><a href="/signout-with-chatgpt?return_to=%2F">Se déconnecter</a></nav></aside><section className="account-content"><div className="eyebrow">Bonjour {user.displayName.split(" ")[0]}</div><h1>Votre écrin JAWNAH</h1><div className="account-stats"><div><span>♡</span><strong>Vos favoris</strong><small>Retrouvez votre sélection</small><a href="/favoris">Voir mes favoris →</a></div><div><span>◎</span><strong>Demandes</strong><small>Aucune demande en cours</small><a href="/produits">Commander →</a></div><div><span>◷</span><strong>Récemment vus</strong><small>Vos dernières découvertes</small><a href="/produits">Explorer →</a></div></div><div className="account-callout"><div><h2>La collection vous attend.</h2><p>Trois teintes signatures, chacune pensée pour capter la lumière à sa façon.</p></div><a href="/produits" className="button button-light">Découvrir</a></div></section></main></PageShell>;
+}
